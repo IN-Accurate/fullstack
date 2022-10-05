@@ -84,6 +84,7 @@ body {
   border-radius: 5px;
   padding-left: 10px;
   font-size: 20px;
+  
 }
 
 .formContainer button {
@@ -98,6 +99,7 @@ body {
 .formContainer button:hover {
   cursor: pointer;
   background-color: dodgerblue;
+
 }
 
 span {
