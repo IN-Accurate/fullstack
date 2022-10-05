@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
       PostId:{
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      username:{
+        type: DataTypes.STRING,
+        allowNull: false,
       }
     });
   

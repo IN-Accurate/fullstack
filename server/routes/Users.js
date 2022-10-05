@@ -3,6 +3,12 @@ const router = express.Router();
 const {Users} = require('../models')
 const bcrypt = require('bcrypt');
 
+const {sign} = require('jsonwebtoken');
+
+const {validateToken} = require('../middlewares/AuthMiddleware')
+
+//https://stackoverflow.com/questions/31309759/what-is-secret-key-for-jwt-based-authentication-and-how-to-generate-it
+
 // User registration
 
 router.post('/',async(req, res) => {
@@ -41,12 +47,30 @@ router.post('/login', async(req, res) => {
     bcrypt.compare(password, user.password).then((match)=>
         {
 
-            if(!match) res.json({error:"Wrong username or password!"});
+            if(!match) 
+              res.json({error:"Wrong username or password!"});
 
-            res.json("You Logged in!");
+            else{
+
+                 const accessToken = sign({username:user.username,id:user.id},
+                     "2745e24ab694a6ae01a842aa52a2ce6dab5f3f6d80f98002c06c4310b12391fb"
+                     );
+                     // node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+                    
+                 res.json(accessToken);
+            
+            }
+
+            // In Google Chrome , Network tab gives all requests present currently. In the respone tab , there will be this token
+            // In application tab , we can get sessionstorage and cookie items
+            //JWT isn't 100% secure and is vulnerable to XSS attacks
+
         });
 
-
 });
+
+router.get('/auth',validateToken,(req, res) => {
+    res.json(req.user)
+})
 
 module.exports = router;
