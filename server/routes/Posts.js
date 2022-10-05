@@ -12,6 +12,16 @@ router.get('/',async(req, res) => {
     //to return as JSON, type res.json(""") , otherwise res.send();
 });
 
+router.get('/byId/:id',async (req, res) => {
+
+    const id = req.params.id;
+    
+    const post = await Posts.findByPk(id); //find by primarykey
+
+    res.json(post);
+
+});
+
 router.post('/',async(req, res) => {
 
     // All the logic to insert data into the db
