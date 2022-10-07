@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
       username: username,
       password: hash,
     });
-    res.json("SUCCESS");
+    res.json("Successfully logged in!");
   });
 });
 
@@ -24,11 +24,11 @@ router.post("/login", async (req, res) => {
   if (!user) res.json({ error: "User Doesn't Exist" });
 
   bcrypt.compare(password, user.password).then(async (match) => {
-    if (!match) res.json({ error: "Wrong Username And Password Combination" });
+    if (!match) res.json({ error: "Invalid Username or password" });
 
     const accessToken = sign(
       { username: user.username, id: user.id },
-      "importantsecret"
+      "2745e24ab694a6ae01a842aa52a2ce6dab5f3f6d80f98002c06c4310b12391fb"
     );
     res.json({ token: accessToken, username: username, id: user.id });
   });

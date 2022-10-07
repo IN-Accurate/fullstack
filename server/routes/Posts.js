@@ -1,13 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const {Posts} = require('../models')
+const {Posts,Likes} = require('../models')
 
 //request,response
 
 router.get('/',async(req, res) => {
 
-    const listOfPosts = await Posts.findAll()
-    res.json(listOfPosts);
+    const listOfPosts = await Posts.findAll({include:[Likes]}) 
+     /*
+     include likes since we cannot actually implement counting likes for the posts individually
+     If if consider individual posts and likes , we need to pass requests everytime we like or unlike the post
+     Instead , we Join both tables . This is much efficient
+     */
+    res.json(listOfPosts);                                      
 
     //to return as JSON, type res.json(""") , otherwise res.send();
 });

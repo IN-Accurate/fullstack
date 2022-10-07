@@ -1,5 +1,7 @@
 'use strict';
 
+//DO NOT TOUCH THIS FILE, IT IS AUTO-GENERATED
+
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
