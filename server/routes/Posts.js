@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {Posts,Likes} = require('../models')
+const {validateToken} = require('../middlewares/AuthMiddleware')
 
 //request,response
 
@@ -27,16 +28,30 @@ router.get('/byId/:id',async (req, res) => {
 
 });
 
-router.post('/',async(req, res) => {
+router.post('/',validateToken,async(req, res) => {
 
     // All the logic to insert data into the db
     
     const post = req.body;
+    post.username = req.user.username;
     await Posts.create(post); //add this to db
     res.json(post);
 
     //make sure to wait for data to be inserted to see if any errors are there
     //in sequelize everything is async
 });
+
+router.delete("/:postId", validateToken, async (req, res) => {
+    const postId = req.params.postId;
+  
+    await Posts.destroy({
+      where: {
+        id: postId,
+      },
+    });
+    
+    res.json("Post Deleted!");
+  });
+  
 
 module.exports = router;

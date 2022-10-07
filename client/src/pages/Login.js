@@ -9,7 +9,6 @@ function Login() {
   const { setAuthState } = useContext(AuthContext);
 
   let navigate = useNavigate();
-
   const login = () => {
     const data = { username: username, password: password };
     axios.post("http://localhost:3001/auth/login", data).then((response) => {

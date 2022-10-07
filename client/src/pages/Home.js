@@ -1,18 +1,28 @@
 import React from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
   let navigate = useNavigate();
-
   useEffect(() => {
-    axios.get("http://localhost:3001/posts").then((response) => {
-      setListOfPosts(response.data);
-    });
-  }, []);
+     if(!localStorage.getItem("accessToken")){
+        
+        navigate("/login");
+        
+        }
 
+      else
+        {
+            axios.get("http://localhost:3001/posts").then((response) => {
+            setListOfPosts(response.data);
+          });
+        }
+
+  },[]);
+
+  
   const likeAPost= (postId) =>{
     axios.post(
 

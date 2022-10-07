@@ -15,7 +15,6 @@ function App() {
     id: 0,
     status: false,
   });
-
   useEffect(() => {
     axios
       .get("http://localhost:3001/auth/auth", {
@@ -34,7 +33,7 @@ function App() {
           });
         }
       });
-  }, []);
+  },[]);
 
   const logout = () => {
     localStorage.removeItem("accessToken");
